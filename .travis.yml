@@ -1,0 +1,24 @@
+sudo: required
+services:
+    - docker
+
+before_install: 
+    - docker build -t bmitchell/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true bmitchell/react-test npm test
+
+after_success:
+    - docker build -t bmitchell/multi-client ./client
+    - docker build -t bmitchell/mutli-nginx ./nginx
+    - docker build -t bmitchell/mutli-server ./server 
+    - docker build -t bmitchell/mutli-worker ./worker
+
+    # login to docker cli
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    # take images and push to dockerhub
+    - docker push bmitchell/mutli-client 
+    - docker push bmitchell/mutli-nginx 
+    - docker push bmitchell/mutli-server 
+    - docker push bmitchell/mutli-worker
