@@ -18,7 +18,7 @@ after_success:
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
     # take images and push to dockerhub
-    - docker push bmitchell/mutli-client 
-    - docker push bmitchell/mutli-nginx 
-    - docker push bmitchell/mutli-server 
-    - docker push bmitchell/mutli-worker
+    - docker push bmitchell21/mutli-client 
+    - docker push bmitchell21/mutli-nginx 
+    - docker push bmitchell21/mutli-server 
+    - docker push bmitchell21/mutli-worker
